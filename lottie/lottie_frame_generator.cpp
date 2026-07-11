@@ -23,7 +23,9 @@ FrameGenerator::FrameGenerator(const QByteArray &bytes)
 		false)) {
 	if (_rlottie) {
 		const auto rate = _rlottie->frameRate();
-		_multiplier = (rate == 60) ? 2 : 1;
+		// Keep the source frame rate: frames are rasterized once and
+		// cached, so the only runtime cost of 60 fps is cheap blitting.
+		_multiplier = 1;
 		auto width = size_t();
 		auto height = size_t();
 		_rlottie->size(width, height);
