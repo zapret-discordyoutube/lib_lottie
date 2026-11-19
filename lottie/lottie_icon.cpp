@@ -387,7 +387,8 @@ Icon::Icon(IconDescriptor &&descriptor)
 	descriptor.limitFps))
 , _color(descriptor.color)
 , _animationFrameTo(descriptor.frame)
-, _colorizeUsingAlpha(descriptor.colorizeUsingAlpha) {
+, _colorizeUsingAlpha(descriptor.colorizeUsingAlpha)
+, _untracked(descriptor.untracked) {
 	crl::async([
 		inner = _inner,
 		name = descriptor.name,
@@ -564,7 +565,11 @@ void Icon::animate(
 			frameTo,
 			(duration
 				? *duration
-				: _inner->animationDuration(frameFrom, frameTo)));
+				: _inner->animationDuration(frameFrom, frameTo)),
+			anim::linear,
+			(_untracked
+				? Ui::Animations::Simple::Tracking::None
+				: Ui::Animations::Simple::Tracking::Short));
 	}
 }
 

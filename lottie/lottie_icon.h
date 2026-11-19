@@ -29,6 +29,7 @@ struct IconDescriptor {
 	int frame = 0;
 	bool limitFps = false;
 	bool colorizeUsingAlpha = false;
+	bool untracked = false;
 };
 
 class Icon final : public base::has_weak_ptr {
@@ -88,6 +89,7 @@ private:
 	Ui::Animations::Simple _animation;
 	mutable int _animationFrameTo = 0;
 	const bool _colorizeUsingAlpha = false;
+	const bool _untracked = false;
 	mutable Fn<void()> _repaint;
 
 };
